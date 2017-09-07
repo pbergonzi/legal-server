@@ -2,8 +2,7 @@ const express = require('express')
 const querystring = require('querystring')
 const request = require('request');
 
-const port = process.env.OPENSHIFT_NODEJS_PORT || 8080
-const ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+const port = process.env.PORT || 8080
 
 const app = express()
 
@@ -11,7 +10,7 @@ app.get('/', function (req, res) {
   res.send('Hello World!')
 })
 
-app.listen(port, ip_address, function () {
+app.listen(port, function () {
   console.log(`Example app running at ${ip_address} listening on port ${port}!`)
 })
 
