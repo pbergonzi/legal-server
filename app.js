@@ -50,6 +50,7 @@ const ipnHandler = (req, res) => {
   }
 
   // JSON object of the IPN message consisting of transaction details.
+  console.log(req)
   let ipnTransactionMessage = req.body
   // Convert JSON ipn data to a query string since Google Cloud Function does not expose raw request data.
   let formUrlEncodedBody = querystring.stringify(ipnTransactionMessage)
