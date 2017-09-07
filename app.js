@@ -2,7 +2,8 @@ const express = require('express')
 const querystring = require('querystring')
 const request = require('request');
 
-const port = process.env.PORT || 8080;
+const port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+const ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 
 const app = express()
 
@@ -10,13 +11,8 @@ app.get('/', function (req, res) {
   res.send('Hello World!')
 })
 
-app.post('/', function (req, res) {
-  console.log(req)
-  res.send('post')
-})
-
-app.listen(port, function () {
-  console.log('Example app listening on port 3000!')
+app.listen(port, ip_address, function () {
+  console.log(`Example app running at ${ip_address} listening on port ${port}!`)
 })
 
 /**
@@ -92,3 +88,5 @@ const ipnHandler = (req, res) => {
     }
   }) 
 }
+
+app.post('/ipn', ipnHandler)
