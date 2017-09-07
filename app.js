@@ -11,7 +11,7 @@ app.get('/', function (req, res) {
 })
 
 app.listen(port, function () {
-  console.log(`Example app running at ${ip_address} listening on port ${port}!`)
+  console.log(`Example app running on port ${port}!`)
 })
 
 /**
