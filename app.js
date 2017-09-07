@@ -39,6 +39,8 @@ const getPaypalURI = () => {
  */
 const ipnHandler = (req, res) => {
   console.log("IPN Notification Event Received")
+  
+  console.log(req.body)
 
   if (req.method !== "POST") {
     console.error("Request method not allowed.")
