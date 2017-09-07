@@ -50,8 +50,8 @@ const ipnHandler = (req, res) => {
   }
 
   // JSON object of the IPN message consisting of transaction details.
-  console.log(req)
   let ipnTransactionMessage = req.body
+  console.log(ipnTransactionMessage)
   // Convert JSON ipn data to a query string since Google Cloud Function does not expose raw request data.
   let formUrlEncodedBody = querystring.stringify(ipnTransactionMessage)
   // Build the body of the verification post message by prefixing 'cmd=_notify-validate'.
