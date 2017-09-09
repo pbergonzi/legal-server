@@ -20,7 +20,9 @@
   "dependencies": {
     "express": "^4.15.4",
     "querystring": "^0.2.0",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "body-parser": "^1.18.0",
+    "colors": ">= 1.1.2"
   },
   "engines": {
     "node": "6.9.4",
