@@ -102,7 +102,7 @@ app.post('/', function(req, res) {
 				// To loop through the &_POST array and print the NV pairs to the screen:
 				console.log('Printing all key-value pairs...'.bold)
 				for (var key in req.body) {
-					if (req.body.hasOwnProperty(key)) {
+					if (req.body[key]) {
 						var value = req.body[key];
 						console.log(key + "=" + value);
 					}
