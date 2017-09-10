@@ -41,16 +41,21 @@ app.post('/', function(req, res) {
 	res.end();
 
 	// read the IPN message sent from PayPal and prepend 'cmd=_notify-validate'
-  var postreq = 'cmd=_notify-validate';
+  //var postreq = 'cmd=_notify-validate';
   
   console.log('type of body : ' + typeof(req.body));
-  
+
+  const formUrlEncodedBody = querystring.stringify(req.body);
+  // Build the body of the verification post message by prefixing 'cmd=_notify-validate'.
+  const postreq = `cmd=_notify-validate&${formUrlEncodedBody}`;
+
+  /*
 	for (var key in req.body) {
 		if (req.body.hasOwnProperty(key)) {
 			var value = querystring.escape(req.body[key]);
 			postreq = postreq + "&" + key + "=" + value;
 		}
-	}
+  }*/
 
 	// Step 2: POST IPN data back to PayPal to validate
 	console.log('Posting back to paypal'.bold);
