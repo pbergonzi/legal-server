@@ -18,11 +18,12 @@
   },
   "homepage": "https://github.com/pbergonzi/legal-server#readme",
   "dependencies": {
-    "express": "^4.15.4",
-    "querystring": "^0.2.0",
-    "request": "^2.81.0",
     "body-parser": "^1.18.0",
-    "colors": ">= 1.1.2"
+    "colors": ">= 1.1.2",
+    "express": "^4.15.4",
+    "nodemailer": "^4.1.0",
+    "querystring": "^0.2.0",
+    "request": "^2.81.0"
   },
   "engines": {
     "node": "6.9.4",
