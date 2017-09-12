@@ -3,8 +3,10 @@ const querystring = require('querystring');
 const request = require('request');
 const colors = require('colors');
 const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
 
-const port = process.env.PORT || 8080
+const PAYPAL_URL = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+const port = process.env.PORT || 8080;
 
 colors.setTheme({
 	silly: 'rainbow',
@@ -23,11 +25,53 @@ const app = express();
 
 app.use(bodyParser.urlencoded({
 	extended: false
-}))
+}));
+
+const account = { user: 'pablobergonzi@gmail.com', pass: 'bergonzi1' };
+const smtp = {host: 'smtp.gmail.com', port: 465, secure: true };
+
+// create reusable transporter object using the default SMTP transport
+const transporter = nodemailer.createTransport({
+	host: smtp.host,
+	port: smtp.port,
+	secure: smtp.secure, // true for 465, false for other ports
+	auth: {
+		user: account.user,
+		pass: account.pass
+	}
+});
+
+// setup email data with unicode symbols
+const mailOptions = {
+	from: 'pablobergonzi@gmail.com', // sender address
+	to: 'pablo@codegex.com', // list of receivers
+	subject: 'Payment OK ✔', // Subject line
+	//text: 'Hello world1?', // plain text body
+	html: '<b>Pago OK</b>' // html body
+};
+
+const sendConfirmationEmail = () => {
+	// send mail with defined transport object
+	console.log('Sending email...');
+	transporter.sendMail(mailOptions, (error, info) => {
+		if (error) {
+			console.log('Email delivery failed'.red);
+			return console.log(error);
+		}
+		console.log(info);
+		console.log('Message sent: %s'.green, info.messageId);
+	});
+};
 
 app.get('/', function(req, res) {
-	res.status(200).send("Paypal IPN Listener");
+	res.status(200).send('Paypal IPN Listener');
 	res.end('Response will be available on console, nothing to look here!');
+});
+
+app.get('/bye', function(req, res) {
+	console.log(req.query);
+	res.status(200).send("BYE");
+	res.end('que se yo');
 });
 
 app.post('/', function(req, res) {
@@ -41,28 +85,29 @@ app.post('/', function(req, res) {
 	res.end();
 
 	// read the IPN message sent from PayPal and prepend 'cmd=_notify-validate'
-  //var postreq = 'cmd=_notify-validate';
+	//var postreq = 'cmd=_notify-validate';
   
-  console.log('type of body : ' + typeof(req.body));
+	console.log('type of body : ' + typeof(req.body));
 
-  const formUrlEncodedBody = querystring.stringify(req.body);
-  // Build the body of the verification post message by prefixing 'cmd=_notify-validate'.
-  const postreq = `cmd=_notify-validate&${formUrlEncodedBody}`;
+	const formUrlEncodedBody = querystring.stringify(req.body);
+	// Build the body of the verification post message by prefixing 'cmd=_notify-validate'.
+	const postreq = `cmd=_notify-validate&${formUrlEncodedBody}`;
 
-  /*
+  	/*
 	for (var key in req.body) {
 		if (req.body.hasOwnProperty(key)) {
 			var value = querystring.escape(req.body[key]);
 			postreq = postreq + "&" + key + "=" + value;
 		}
-  }*/
+	}
+	*/
 
 	// Step 2: POST IPN data back to PayPal to validate
 	console.log('Posting back to paypal'.bold);
 	console.log(postreq);
 	console.log('\n\n');
 	var options = {
-		url: 'https://www.sandbox.paypal.com/cgi-bin/webscr',
+		url: PAYPAL_URL,
 		method: 'POST',
 		headers: {
 			'Connection': 'close'
@@ -82,7 +127,10 @@ app.post('/', function(req, res) {
 				// The IPN is verified, process it
 				console.log('Verified IPN!'.green);
 				console.log('\n\n');
-
+				
+				// send email
+				sendConfirmationEmail();
+				
 				// assign posted variables to local variables
 				var item_name = req.body['item_name'];
 				var item_number = req.body['item_number'];
