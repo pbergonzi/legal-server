@@ -4,7 +4,9 @@ const request = require('request');
 const colors = require('colors');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
+const MongoClient = require('mongodb').MongoClient;
 
+const MONGODB_CONN = 'mongodb://pbergonzi:abritta1@ds019966.mlab.com:19966/morci';
 const PAYPAL_URL = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 const port = process.env.PORT || 8080;
 
@@ -63,6 +65,16 @@ const sendConfirmationEmail = () => {
 	});
 };
 
+// CORS header securiy
+/*
+app.all('/*', function (req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+	res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+	next();
+});
+*/
+
 app.get('/', function(req, res) {
 	res.status(200).send('Paypal IPN Listener');
 	res.end('Response will be available on console, nothing to look here!');
@@ -72,6 +84,18 @@ app.get('/bye', function(req, res) {
 	console.log(req.query);
 	res.status(200).send("BYE");
 	res.end('que se yo');
+});
+
+app.post('/card', function(req, res) {
+	// Connect to the db
+	console.log(req.body);
+	MongoClient.connect(MONGODB_CONN, function(err, db) {
+		if(err) { return console.dir(err); }
+		let collection = db.collection('cards');
+		collection.insert(req.body);
+		res.status(200).send("OK");
+		res.end('fue');	
+	});
 });
 
 app.post('/', function(req, res) {
