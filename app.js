@@ -31,8 +31,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-const account = { user: 'pablobergonzi@gmail.com', pass: 'bergonzi1' };
-const smtp = {host: 'smtp.gmail.com', port: 465, secure: true };
+const account = { user: 'legalcard@codegex.com', pass: '123456' };
+const smtp = {host: 'smtp.webfaction.com', port: 465, secure: true };
 
 // create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport({
@@ -210,7 +210,7 @@ app.post('/', function(req, res) {
 						owner_email: simpleCard.ownerEmail,
 						owner_name: simpleCard.ownerName,
 						card_date_from: new Date(simpleCard.dateTo),
-						card_date_from: new Date(simpleCard.dateTo)
+						card_date_to: new Date(simpleCard.dateTo)
 					};
 
 					console.log(payment);
