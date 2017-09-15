@@ -82,6 +82,7 @@ const saveCard = (card) => {
 const insertPayment = (paymentStatus) => {
 	MongoClient.connect(MONGODB_CONN, function(err, db) {
 		if(err) { return console.log(err); }
+		console.log('guardando en la db');
 		const collection = db.collection('payments');
 		collection.insert(paymentStatus);	
 	});
@@ -212,6 +213,7 @@ app.post('/', function(req, res) {
 						card_date_from: new Date(simpleCard.dateTo)
 					};
 
+					console.log(payment);
 					console.log('mandando mail a ' + payment.owner_email);
 					// send email
 					sendConfirmationEmail(payment.owner_email);
