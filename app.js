@@ -191,7 +191,7 @@ app.post('/', function(req, res) {
 				const payer_email = req.body['payer_email'];
 				const gzipped_card = req.body['custom'];
 
-				const buf = new Buffer(strSCard, 'base64');
+				const buf = new Buffer(gzipped_card, 'base64');
 				
 				zlib.gunzip(buf, (error, buffer) => {
 					if (error) throw error;
