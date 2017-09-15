@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-const account = { user: 'legalcard@codegex.com', pass: '123456' };
+const account = { user: 'legalcard', pass: '123456' };
 const smtp = {host: 'smtp.webfaction.com', port: 465, secure: true };
 
 // create reusable transporter object using the default SMTP transport
@@ -50,7 +50,7 @@ const sendConfirmationEmail = (email) => {
 	console.log('Sending email...');
 	// setup email data with unicode symbols
 	const mailOptions = {
-		from: 'pablobergonzi@gmail.com', // sender address
+		from: 'legalcard@codegex.com', // sender address
 		to: email, // list of receivers
 		subject: 'Payment OK ✔', // Subject line
 		//text: 'Hello world1?', // plain text body
@@ -209,7 +209,7 @@ app.post('/', function(req, res) {
 						owner_passport: simpleCard.ownerPassport,
 						owner_email: simpleCard.ownerEmail,
 						owner_name: simpleCard.ownerName,
-						card_date_from: new Date(simpleCard.dateTo),
+						card_date_from: new Date(simpleCard.dateFrom),
 						card_date_to: new Date(simpleCard.dateTo)
 					};
 
