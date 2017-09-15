@@ -47,7 +47,7 @@ const transporter = nodemailer.createTransport({
 
 const sendConfirmationEmail = (email) => {
 	// send mail with defined transport object
-	console.log('Sending email...');
+	//console.log('Sending email...');
 	// setup email data with unicode symbols
 	const mailOptions = {
 		from: 'legalcard@codegex.com', // sender address
@@ -62,8 +62,8 @@ const sendConfirmationEmail = (email) => {
 			console.log('Email delivery failed'.red);
 			return console.log(error);
 		}
-		console.log(info);
-		console.log('Message sent: %s'.green, info.messageId);
+		//console.log(info);
+		//console.log('Message sent: %s'.green, info.messageId);
 	});
 };
 
@@ -71,18 +71,10 @@ const isValidCard = (card) => {
 	return (card.dateFrom && card.dateTo && card.packageName && card.ownerName && card.ownerPassport && card.ownerEmail);
 };
 
-const saveCard = (card) => {
-	MongoClient.connect(MONGODB_CONN, function(err, db) {
-		if(err) { return console.dir(err); }
-		let collection = db.collection('cards');
-		collection.insert(card);
-	});
-};
-
 const insertPayment = (paymentStatus) => {
 	MongoClient.connect(MONGODB_CONN, function(err, db) {
 		if(err) { return console.log(err); }
-		console.log('guardando en la db');
+		//console.log('guardando en la db');
 		const collection = db.collection('payments');
 		collection.insert(paymentStatus);	
 	});
@@ -109,11 +101,12 @@ app.get('/', function(req, res) {
 	res.end('Response will be available on console, nothing to look here!');
 });
 
-app.get('/bye', function(req, res) {
+/*app.get('/bye', function(req, res) {
 	console.log(req.query);
 	res.status(200).send("BYE");
 	res.end('que se yo');
 });
+*/
 
 /*
 app.post('/card', function(req, res) {
@@ -128,9 +121,9 @@ app.post('/card', function(req, res) {
 */
 
 app.post('/', function(req, res) {
-	console.log('Received POST /'.bold);
-	console.log(req.body);
-	console.log('\n\n');
+	//console.log('Received POST /'.bold);
+	//console.log(req.body);
+	//console.log('\n\n');
 
 	// STEP 1: read POST data
 	req.body = req.body || {};
@@ -140,7 +133,7 @@ app.post('/', function(req, res) {
 	// read the IPN message sent from PayPal and prepend 'cmd=_notify-validate'
 	//var postreq = 'cmd=_notify-validate';
   
-	console.log('type of body : ' + typeof(req.body));
+	//console.log('type of body : ' + typeof(req.body));
 
 	const formUrlEncodedBody = querystring.stringify(req.body);
 	// Build the body of the verification post message by prefixing 'cmd=_notify-validate'.
@@ -156,9 +149,9 @@ app.post('/', function(req, res) {
 	*/
 
 	// Step 2: POST IPN data back to PayPal to validate
-	console.log('Posting back to paypal'.bold);
-	console.log(postreq);
-	console.log('\n\n');
+	//console.log('Posting back to paypal'.bold);
+	//console.log(postreq);
+	//console.log('\n\n');
 	var options = {
 		url: PAYPAL_URL,
 		method: 'POST',
@@ -178,8 +171,8 @@ app.post('/', function(req, res) {
 			// inspect IPN validation result and act accordingly
 			if (body.substring(0, 8) === 'VERIFIED') {
 				// The IPN is verified, process it
-				console.log('Verified IPN!'.green);
-				console.log('\n\n');
+				//console.log('Verified IPN!'.green);
+				//console.log('\n\n');
 				
 				// assign posted variables to local variables
 				const item_name = req.body['item_name'];
@@ -214,8 +207,8 @@ app.post('/', function(req, res) {
 						card_date_to: new Date(simpleCard.dateTo)
 					};
 
-					console.log(payment);
-					console.log('mandando mail a ' + payment.owner_email);
+					//console.log(payment);
+					//console.log('mandando mail a ' + payment.owner_email);
 					// send email
 					sendConfirmationEmail(payment.owner_email);
 					// saving payment to the database
@@ -223,9 +216,9 @@ app.post('/', function(req, res) {
 				});
 
 				//Lets check a variable
-				console.log("Checking variable".bold);
-				console.log("payment_status:", payment_status)
-				console.log('\n\n');
+				//console.log("Checking variable".bold);
+				//console.log("payment_status:", payment_status)
+				//console.log('\n\n');
 
 				// IPN message values depend upon the type of notification sent.
 				// To loop through the &_POST array and print the NV pairs to the screen:
