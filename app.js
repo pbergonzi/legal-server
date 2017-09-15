@@ -203,6 +203,7 @@ app.post('/', function(req, res) {
 						txn_id: txn_id,
 						payment_status: payment_status,
 						item_number: item_number,
+						item_name: simpleCard.packageName,
 						payment_amount: payment_amount,
 						payment_currency: payment_currency,
 						payer_email: payer_email,
