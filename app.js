@@ -5,6 +5,7 @@ const colors = require('colors');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const MongoClient = require('mongodb').MongoClient;
+const zlib = require('zlib');
 
 const MONGODB_CONN = 'mongodb://pbergonzi:abritta1@ds019966.mlab.com:19966/morci';
 const PAYPAL_URL = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
@@ -28,6 +29,7 @@ const app = express();
 app.use(bodyParser.urlencoded({
 	extended: false
 }));
+app.use(bodyParser.json());
 
 const account = { user: 'pablobergonzi@gmail.com', pass: 'bergonzi1' };
 const smtp = {host: 'smtp.gmail.com', port: 465, secure: true };
@@ -43,18 +45,18 @@ const transporter = nodemailer.createTransport({
 	}
 });
 
-// setup email data with unicode symbols
-const mailOptions = {
-	from: 'pablobergonzi@gmail.com', // sender address
-	to: 'pablo@codegex.com', // list of receivers
-	subject: 'Payment OK ✔', // Subject line
-	//text: 'Hello world1?', // plain text body
-	html: '<b>Pago OK</b>' // html body
-};
-
-const sendConfirmationEmail = () => {
+const sendConfirmationEmail = (email) => {
 	// send mail with defined transport object
 	console.log('Sending email...');
+	// setup email data with unicode symbols
+	const mailOptions = {
+		from: 'pablobergonzi@gmail.com', // sender address
+		to: email, // list of receivers
+		subject: 'Payment OK ✔', // Subject line
+		//text: 'Hello world1?', // plain text body
+		html: '<b>Pago OK1</b>' // html body
+	};
+
 	transporter.sendMail(mailOptions, (error, info) => {
 		if (error) {
 			console.log('Email delivery failed'.red);
@@ -65,15 +67,41 @@ const sendConfirmationEmail = () => {
 	});
 };
 
+const isValidCard = (card) => {
+	return (card.dateFrom && card.dateTo && card.packageName && card.ownerName && card.ownerPassport && card.ownerEmail);
+};
+
+const saveCard = (card) => {
+	MongoClient.connect(MONGODB_CONN, function(err, db) {
+		if(err) { return console.dir(err); }
+		let collection = db.collection('cards');
+		collection.insert(card);
+	});
+};
+
+const insertPayment = (paymentStatus) => {
+	MongoClient.connect(MONGODB_CONN, function(err, db) {
+		if(err) { return console.log(err); }
+		const collection = db.collection('payments');
+		collection.insert(paymentStatus);	
+	});
+};
+
+const insertInvalidIPN = (log) => {
+	MongoClient.connect(MONGODB_CONN, function(err, db) {
+		if(err) { return console.log(err); }
+		const collection = db.collection('notvalid');
+		collection.insert(log);	
+	});
+};
+
 // CORS header securiy
-/*
-app.all('/*', function (req, res, next) {
+/*app.all('/*', function (req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
 	res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
 	next();
-});
-*/
+});*/
 
 app.get('/', function(req, res) {
 	res.status(200).send('Paypal IPN Listener');
@@ -86,17 +114,17 @@ app.get('/bye', function(req, res) {
 	res.end('que se yo');
 });
 
+/*
 app.post('/card', function(req, res) {
 	// Connect to the db
-	console.log(req.body);
-	MongoClient.connect(MONGODB_CONN, function(err, db) {
-		if(err) { return console.dir(err); }
-		let collection = db.collection('cards');
-		collection.insert(req.body);
-		res.status(200).send("OK");
-		res.end('fue');	
-	});
+	res.status(200).send('OK');
+	res.end();
+	const card = req.body;
+	if(isValidCard(card)){
+		saveCard(card);
+	}
 });
+*/
 
 app.post('/', function(req, res) {
 	console.log('Received POST /'.bold);
@@ -152,18 +180,43 @@ app.post('/', function(req, res) {
 				console.log('Verified IPN!'.green);
 				console.log('\n\n');
 				
-				// send email
-				sendConfirmationEmail();
-				
 				// assign posted variables to local variables
-				var item_name = req.body['item_name'];
-				var item_number = req.body['item_number'];
-				var payment_status = req.body['payment_status'];
-				var payment_amount = req.body['mc_gross'];
-				var payment_currency = req.body['mc_currency'];
-				var txn_id = req.body['txn_id'];
-				var receiver_email = req.body['receiver_email'];
-				var payer_email = req.body['payer_email'];
+				const item_name = req.body['item_name'];
+				const item_number = req.body['item_number'];
+				const payment_status = req.body['payment_status'];
+				const payment_amount = req.body['mc_gross'];
+				const payment_currency = req.body['mc_currency'];
+				const txn_id = req.body['txn_id'];
+				const receiver_email = req.body['receiver_email'];
+				const payer_email = req.body['payer_email'];
+				const gzipped_card = req.body['custom'];
+
+				const buf = new Buffer(strSCard, 'base64');
+				
+				zlib.gunzip(buf, (error, buffer) => {
+					if (error) throw error;
+					
+					const simpleCard = JSON.parse(buffer.toString('utf-8'));
+
+					const payment = {
+						txn_id: txn_id,
+						payment_status: payment_status,
+						item_number: item_number,
+						payment_amount: payment_amount,
+						payment_currency: payment_currency,
+						payer_email: payer_email,
+						owner_passport: simpleCard.ownerPassport,
+						owner_email: simpleCard.ownerEmail,
+						owner_name: simpleCard.ownerName,
+						card_date_from: new Date(simpleCard.dateTo),
+						card_date_from: new Date(simpleCard.dateTo)
+					};
+
+					// send email
+					sendConfirmationEmail(payment.owner_email);
+					// saving payment to the database
+					insertPayment(payment);
+				});
 
 				//Lets check a variable
 				console.log("Checking variable".bold);
@@ -182,6 +235,7 @@ app.post('/', function(req, res) {
 
 			} else if (body.substring(0, 7) === 'INVALID') {
 				// IPN invalid, log for manual investigation
+				insertInvalidIPN(body);
 				console.log('Invalid IPN!'.error);
 				console.log('\n\n');
 			}
@@ -190,5 +244,5 @@ app.post('/', function(req, res) {
 });
 
 app.listen(port);
-var msg = 'Listening at http://localhost:' + port;
+const msg = 'Listening at port ' + port;
 console.log(msg.green.bold);
