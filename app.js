@@ -50,9 +50,8 @@ const transporter = nodemailer.createTransport({
 const gaEmmitPayment = (payment) => {
 	const visitor = ua(GA_ID);
 	const value = parseInt(payment.payment_amount);
-	
+
 	visitor.event('product', 'buy', payment.item_name, value, function (err) {
-		console.log(err.message.red);
 		console.log(err);
 	});	
 };
