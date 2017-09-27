@@ -6,10 +6,12 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const MongoClient = require('mongodb').MongoClient;
 const zlib = require('zlib');
+const ua = require('universal-analytics');
 
 const MONGODB_CONN = 'mongodb://pbergonzi:abritta1@ds019966.mlab.com:19966/morci';
 const PAYPAL_URL = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 const port = process.env.PORT || 8080;
+const GA_ID = 'UA-65711503-2';
 
 colors.setTheme({
 	silly: 'rainbow',
@@ -44,6 +46,16 @@ const transporter = nodemailer.createTransport({
 		pass: account.pass
 	}
 });
+
+const gaEmmitPayment = (payment) => {
+	const visitor = ua(GA_ID);
+	const value = parseInt(payment.payment_amount);
+	
+	visitor.event('product', 'buy', payment.item_name, value, function (err) {
+		console.log(err.message.red);
+		console.log(err);
+	});	
+};
 
 const sendConfirmationEmail = (email) => {
 	// send mail with defined transport object
@@ -207,6 +219,8 @@ app.post('/', function(req, res) {
 						card_date_to: new Date(simpleCard.dateTo)
 					};
 
+					//Analytics
+					gaEmmitPayment(payment);
 					//console.log(payment);
 					//console.log('mandando mail a ' + payment.owner_email);
 					// send email
