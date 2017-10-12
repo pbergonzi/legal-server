@@ -129,9 +129,9 @@ app.post('/card', function(req, res) {
 */
 
 app.post('/', function(req, res) {
-	console.log('Received POST /'.bold);
+	//console.log('Received POST /'.bold);
 	//console.log(req.body);
-	console.log('\n\n');
+	//console.log('\n\n');
 
 	// STEP 1: read POST data
 	req.body = req.body || {};
