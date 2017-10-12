@@ -1,0 +1,33 @@
+{
+  "name": "legal-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pbergonzi/legal-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pbergonzi/legal-server/issues"
+  },
+  "homepage": "https://github.com/pbergonzi/legal-server#readme",
+  "dependencies": {
+    "body-parser": "^1.18.0",
+    "colors": ">= 1.1.2",
+    "express": "^4.15.4",
+    "mongodb": "^2.2.31",
+    "nodemailer": "^4.1.0",
+    "querystring": "^0.2.0",
+    "request": "^2.81.0"
+  },
+  "engines": {
+    "node": "6.11.3",
+    "npm": "3.10.10"
+  }
+}
