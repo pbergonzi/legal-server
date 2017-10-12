@@ -7,8 +7,15 @@ const nodemailer = require('nodemailer');
 const MongoClient = require('mongodb').MongoClient;
 const zlib = require('zlib');
 
-const MONGODB_CONN = 'mongodb://pbergonzi:abritta1@ds019966.mlab.com:19966/morci';
-const PAYPAL_URL = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+const MONGODB_CONN = process.env.MONGODB_CONN || 'mongodb://pbergonzi:abritta1@ds019966.mlab.com:19966/morci';
+const PAYPAL_URL = process.env.PAYPAL_URL || 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+const MAIL_USER = process.env.MAIL_USER || 'infoattorney';
+const MAIL_PASS = process.env.MAIL_PASS || '1234567';
+const MAIL_ADDR = process.env.MAIL_ADDR || 'info@attorney-assistance.com';
+const MAIL_SMTP = process.env.MAIL_SMTP || 'smtp.webfaction.com';
+const MAIL_PORT = process.env.MAIL_PORT || 465;
+const MAIL_SECURE = process.env.MAIL_SECURE || true;
+
 const port = process.env.PORT || 8080;
 
 colors.setTheme({
@@ -31,8 +38,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-const account = { user: 'legalcard', pass: '123456' };
-const smtp = {host: 'smtp.webfaction.com', port: 465, secure: true };
+const account = { user: MAIL_USER, pass: MAIL_PASS };
+const smtp = {host: MAIL_SMTP, port: MAIL_PORT, secure: MAIL_SECURE };
 
 // create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport({
@@ -50,11 +57,11 @@ const sendConfirmationEmail = (email) => {
 	//console.log('Sending email...');
 	// setup email data with unicode symbols
 	const mailOptions = {
-		from: 'legalcard@codegex.com', // sender address
+		from: MAIL_ADDR, // sender address
 		to: email, // list of receivers
 		subject: 'Payment OK ✔', // Subject line
 		//text: 'Hello world1?', // plain text body
-		html: '<b>Pago OK1</b>' // html body
+		html: '<b>Payment OK</b>' // html body
 	};
 
 	transporter.sendMail(mailOptions, (error, info) => {
