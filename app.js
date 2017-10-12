@@ -106,6 +106,7 @@ const insertInvalidIPN = (log) => {
 app.get('/', function(req, res) {
 	res.status(200).send('Paypal IPN Listener');
 	res.end('Response will be available on console, nothing to look here!');
+	console.log(PAYPAL_URL);
 });
 
 /*app.get('/bye', function(req, res) {
