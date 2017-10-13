@@ -60,6 +60,11 @@ const sendConfirmationEmail = (payment) => {
 	const name = payment.owner_name;
 	const passport = payment.owner_passport;
 	const email = payment.owner_email;
+	const pack = payment.item_name;
+	const valid_from = payment.card_date_from;
+	const valid_to = payment.card_date_to;
+	const currency = payment.payment_currency;
+	const ammount = payment.payment_amount;
 
 	const mail = `
 	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body><div>
@@ -93,9 +98,9 @@ const sendConfirmationEmail = (payment) => {
 						  <img style="padding-left:10px;padding-right:10px" width="16px" src="http://themonstera.com/info.png">
 					  </td>
 					  <td>
-						  <b>Your Selection:</b> 1 year pack<br>
-						  <b>Valid from:</b> 10/15/2017 to 10/25/2017<br>
-						  <b>Price:</b> $399<br>
+						  <b>Your Selection:</b> ${pack}<br>
+						  <b>Valid from:</b> ${valid_from} to ${valid_to}<br>
+						  <b>Price:</b> (${currency}) ${ammount}<br>
 					  </td>
 				  </tr>
 			  </table>
