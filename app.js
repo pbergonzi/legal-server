@@ -122,9 +122,9 @@ const sendConfirmationEmail = (email) => {
 	const mailOptions = {
 		from: MAIL_ADDR, // sender address
 		to: email, // list of receivers
-		subject: 'Payment OK ✔', // Subject line
+		subject: 'Attorney Assistance Payment Received ✔', // Subject line
 		//text: 'Hello world1?', // plain text body
-		html: '<b>Payment OK</b>' // html body
+		html: mail // html body
 	};
 
 	transporter.sendMail(mailOptions, (error, info) => {
