@@ -52,6 +52,12 @@ const transporter = nodemailer.createTransport({
 	}
 });
 
+const toLegibleDate = (strIsoDate) => {
+	const isoDate = new Date(strIsoDate);
+	const legibleDate = ("0" + (isoDate.getMonth() + 1)).slice(-2) + "-" + ("0" + isoDate.getDate()).slice(-2) + "-" + isoDate.getFullYear();
+	return legibleDate;
+}
+
 const sendConfirmationEmail = (payment) => {
 	// send mail with defined transport object
 	//console.log('Sending email...');
@@ -61,8 +67,8 @@ const sendConfirmationEmail = (payment) => {
 	const passport = payment.owner_passport;
 	const email = payment.owner_email;
 	const pack = payment.item_name;
-	const valid_from = payment.card_date_from;
-	const valid_to = payment.card_date_to;
+	const valid_from = toLegibleDate(payment.card_date_from);
+	const valid_to = toLegibleDate(payment.card_date_to);
 	const currency = payment.payment_currency;
 	const ammount = payment.payment_amount;
 
