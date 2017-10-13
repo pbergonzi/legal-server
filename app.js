@@ -52,6 +52,69 @@ const transporter = nodemailer.createTransport({
 	}
 });
 
+const mail = `
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body><div>
+        <div bgcolor="#335781" style="background-color:#335781">
+              <img src="http://themonstera.com/aa-logo.png" alt="">
+      </div>
+      <h1 style="text-align:center;padding-top:35px">Welcome to Year Pack</h1>
+      <p style="font-size:15px;margin-top:10px;margin-bottom:5px;text-align:justify;width:80%;margin-left:10%">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent interdum purus bibendum ipsum vehicula interdum vitae in nibh. Donec id lacus nec velit imperdiet iaculis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec nibh aliquam, ultrices dolor eget, scelerisque purus. Pellentesque sit amet est diam. Sed finibus dictum congue. Morbi non accumsan risus. Nam ut elit ut massa facilisis facilisis vel in leo. Nunc ultrices urna massa, malesuada maximus turpis faucibus nec. Fusce eget leo at augue tempor finibus. Sed ac lorem at ex imperdiet tincidunt vitae tincidunt lectus. Maecenas lacus dolor, rhoncus eget facilisis at, pulvinar eu quam. Mauris dolor odio, accumsan vitae neque vel, tincidunt suscipit turpis. Proin interdum orci et felis vehicula laoreet.
+      </p>
+      <div style="background-color:rgb(247,247,247);padding:20px;margin-top:30px;text-align:center">
+        <div>
+          <img width="44px" style="padding-top:5px;padding-bottom:5px" src="http://themonstera.com/aa-footer.png">
+          <hr>
+          <table style="margin:0 auto">
+              <tr>
+                  <td>
+                      <img style="padding-left:10px;padding-right:10px" width="16px" src="http://themonstera.com/profile.png">
+                  </td>
+                  <td>
+                      <b>Name:</b> Pablo Feldman<br>
+                      <b>Passport:</b> 1234567<br>
+                      <b>Email:</b> <a href="mailto:pablofeldman90@gmail.com" target="_blank">pablofeldman90@gmail.<wbr>com</a><br>
+                  </td>
+              </tr>
+          </table>
+          <hr>
+          <table style="margin:0 auto">
+              <tr>
+                  <td>
+                      <img style="padding-left:10px;padding-right:10px" width="16px" src="http://themonstera.com/info.png">
+                  </td>
+                  <td>
+                      <b>Your Selection:</b> 1 year pack<br>
+                      <b>Valid from:</b> 10/15/2017 to 10/25/2017<br>
+                      <b>Price:</b> $399<br>
+                  </td>
+              </tr>
+          </table>
+          <hr>
+          <h4 style="margin-bottom:5px">Contact Us</h4>
+          <a style="background-color:#ad2d1d;color:white;padding:9px 0;width:150px;margin:0 auto;border-radius:8px;text-decoration:none;display:block">0800-122-1555</a>
+          <hr>
+          <table style="margin:0 auto">
+            <tr>
+                <td>
+                  <a href="http://www.facebook.com" target="_blank">
+                      <img src="http://themonstera.com/facebook.png" style="padding-right:20px">
+                    </a>
+                  </td>
+                  <td>
+                  <a href="http://www.twitter.com" target="_blank">
+                      <img src="http://themonstera.com/twitter.png" style="padding-left:20px">
+                    </a>
+                  </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <img src="http://themonstera.com/bottom.png" style="margin-top:15px;width:100%">
+      </div>
+    </div></body></html>`;
+
 const sendConfirmationEmail = (email) => {
 	// send mail with defined transport object
 	//console.log('Sending email...');
