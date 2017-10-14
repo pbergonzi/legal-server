@@ -77,9 +77,9 @@ const sendConfirmationEmail = (payment) => {
 			<div bgcolor="#335781" style="background-color:#335781">
 				  <img src="http://themonstera.com/aa-logo.png" alt="">
 		  </div>
-		  <h1 style="text-align:center;padding-top:35px">Welcome to Year Pack</h1>
+		  <h1 style="text-align:center;padding-top:35px">Welcome to Attorney Assistance</h1>
 		  <p style="font-size:15px;margin-top:10px;margin-bottom:5px;text-align:justify;width:80%;margin-left:10%">
-		  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent interdum purus bibendum ipsum vehicula interdum vitae in nibh. Donec id lacus nec velit imperdiet iaculis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec nibh aliquam, ultrices dolor eget, scelerisque purus. Pellentesque sit amet est diam. Sed finibus dictum congue. Morbi non accumsan risus. Nam ut elit ut massa facilisis facilisis vel in leo. Nunc ultrices urna massa, malesuada maximus turpis faucibus nec. Fusce eget leo at augue tempor finibus. Sed ac lorem at ex imperdiet tincidunt vitae tincidunt lectus. Maecenas lacus dolor, rhoncus eget facilisis at, pulvinar eu quam. Mauris dolor odio, accumsan vitae neque vel, tincidunt suscipit turpis. Proin interdum orci et felis vehicula laoreet.
+		  Thank you for choosing us as your personal attorneys in Argentina. We are glad to have you as our client, please check that your data is correct, if not, please contact us.
 		  </p>
 		  <div style="background-color:rgb(247,247,247);padding:20px;margin-top:30px;text-align:center">
 			<div>
@@ -113,6 +113,9 @@ const sendConfirmationEmail = (payment) => {
 			  <hr>
 			  <h4 style="margin-bottom:5px">Contact Us</h4>
 			  <a href="tel:+5491150061109" style="background-color:#ad2d1d;color:white;padding:9px 0;width:150px;margin:0 auto;border-radius:8px;text-decoration:none;display:block">+54 9 11 5006 1109</a>
+			  <br>
+			  <a href="mailto:contact@attorney-assistance.com" style="background-color:#ad2d1d;color:white;padding:9px 0;width:150px;margin:0 auto;border-radius:8px;text-decoration:none;display:block">contact@attorney-assistance.com</a>
+			  
 			  <hr>
 			  <table style="margin:0 auto">
 				<tr>
