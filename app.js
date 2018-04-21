@@ -73,69 +73,68 @@ const sendConfirmationEmail = (payment) => {
 	const ammount = payment.payment_amount;
 
 	const mail = `
-	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body><div>
-			<div bgcolor="#335781" style="background-color:#335781">
-				  <img src="http://themonstera.com/aa-logo.png" alt="">
-		  </div>
-		  <h1 style="text-align:center;padding-top:35px">Welcome to Attorney Assistance</h1>
-		  <p style="font-size:15px;margin-top:10px;margin-bottom:5px;text-align:justify;width:80%;margin-left:10%">
-		  Thank you for choosing us as your personal attorneys in Argentina. We are glad to have you as our client, please check that your data is correct, if not, please contact us.
-		  </p>
-		  <div style="background-color:rgb(247,247,247);padding:20px;margin-top:30px;text-align:center">
+		<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body><div>
+		<div bgcolor="#335781" style="background-color:#335781">
+			<img src="https://drive.google.com/uc?id=1hYrz5zu9pJxe6i4eKnzg1gKIzrZ92pSd" alt="">
+		</div>
+		<h1 style="text-align:center;padding-top:35px">Welcome to Attorney Assistance</h1>
+		<p style="font-size:15px;margin-top:10px;margin-bottom:5px;text-align:justify;width:80%;margin-left:10%">
+		Thank you for choosing us as your personal attorneys in Argentina. We are glad to have you as our client, please check that your data is correct, if not, please contact us.
+		</p>
+		<div style="background-color:rgb(247,247,247);padding:20px;margin-top:30px;text-align:center">
 			<div>
-			  <img width="44px" style="padding-top:5px;padding-bottom:5px" src="http://themonstera.com/aa-footer.png">
-			  <hr>
-			  <table style="margin:0 auto">
-				  <tr>
-					  <td>
-						  <img style="padding-left:10px;padding-right:10px" width="16px" src="http://themonstera.com/profile.png">
-					  </td>
-					  <td>
-						  <b>Name:</b> ${name}<br>
-						  <b>Passport:</b> ${passport} <br>
-						  <b>Email:</b> ${email}<br>
-					  </td>
-				  </tr>
-			  </table>
-			  <hr>
-			  <table style="margin:0 auto">
-				  <tr>
-					  <td>
-						  <img style="padding-left:10px;padding-right:10px" width="16px" src="http://themonstera.com/info.png">
-					  </td>
-					  <td>
-						  <b>Your Selection:</b> ${pack}<br>
-						  <b>Valid from:</b> ${valid_from} to ${valid_to}<br>
-						  <b>Price:</b> (${currency}) ${ammount}<br>
-					  </td>
-				  </tr>
-			  </table>
-			  <hr>
-			  <h4 style="margin-bottom:5px">Contact Us</h4>
-			  <a href="tel:+5491150061109" style="background-color:#ad2d1d;color:white;padding:9px 0;width:150px;margin:0 auto;border-radius:8px;text-decoration:none;display:block">+54 9 11 5006 1109</a>
-			  <br>
-			  <a href="mailto:contact@attorney-assistance.com" style="background-color:#ad2d1d;color:white;padding:9px 0;width:150px;margin:0 auto;border-radius:8px;text-decoration:none;display:block">contact@attorney-assistance.com</a>
-			  
-			  <hr>
-			  <table style="margin:0 auto">
+			<img width="44px" style="padding-top:5px;padding-bottom:5px" src="https://drive.google.com/uc?id=1XiBNr0ZnP3bbUUqsQCcR5xQX3k7qeSn6">
+			<hr>
+			<table style="margin:0 auto">
 				<tr>
 					<td>
-					  <a href="http://www.facebook.com" target="_blank">
-						  <img src="http://themonstera.com/facebook.png" style="padding-right:20px">
-						</a>
-					  </td>
-					  <td>
-					  <a href="http://www.twitter.com" target="_blank">
-						  <img src="http://themonstera.com/twitter.png" style="padding-left:20px">
-						</a>
-					  </td>
+						<img style="padding-left:10px;padding-right:10px" width="16px" src="https://drive.google.com/uc?id=1XAjCoypdceowxeuUIB36b_xCYpRD8Cao">
+					<td>
+						<b>Name:</b> ${name}<br>
+						<b>Passport:</b> ${passport} <br>
+						<b>Email:</b> ${email}<br>
+					</td>
 				</tr>
-			  </table>
+			</table>
+			<hr>
+			<table style="margin:0 auto">
+				<tr>
+					<td>
+						<img style="padding-left:10px;padding-right:10px" width="16px" src="./info.png">
+					</td>
+					<td>
+						<b>Your Selection:</b> ${pack}<br>
+						<b>Valid from:</b> ${valid_from} to ${valid_to}<br>
+						<b>Price:</b> (${currency}) ${ammount}<br>
+					</td>
+				</tr>
+			</table>
+			<hr>
+			<h4 style="margin-bottom:5px">Contact Us</h4>
+			<a href="tel:+5491150061109" style="background-color:#ad2d1d;color:white;padding:9px 0;width:150px;margin:0 auto;border-radius:8px;text-decoration:none;display:block">+54 9 11 5006 1109</a>
+			<br>
+			<a href="mailto:contact@attorney-assistance.com" style="background-color:#ad2d1d;color:white;padding:9px 0;width:150px;margin:0 auto;border-radius:8px;text-decoration:none;display:block">contact@attorney-assistance.com</a>
+			
+			<hr>
+			<table style="margin:0 auto">
+				<tr>
+					<td>
+					<a href="http://www.facebook.com" target="_blank">
+						<img src="https://drive.google.com/uc?id=1xJVRE6XjHjQvNb-hxcfIOTualrGbSNj_" style="padding-right:20px">
+						</a>
+					</td>
+					<td>
+					<a href="http://www.twitter.com" target="_blank">
+						<img src="https://drive.google.com/uc?id=1fwCzZsxQ9ghotMoJt-QxkGuPi0OpCBoT" style="padding-left:20px">
+						</a>
+					</td>
+				</tr>
+			</table>
 			</div>
-		  </div>
-		  <div style="text-align:center">
-			<img src="http://themonstera.com/bottom.png" style="margin-top:15px;width:100%">
-		  </div>
+		</div>
+		<div style="text-align:center">
+			<img src="https://drive.google.com/uc?id=1qYaYf-eywgj7PuTfRRgKDLBv0TvR9K4D" style="margin-top:15px;width:100%">
+		</div>
 		</div></body></html>`;
 	
 	const mailOptions = {
