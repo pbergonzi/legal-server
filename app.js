@@ -100,7 +100,7 @@ const sendConfirmationEmail = (payment) => {
 			<table style="margin:0 auto">
 				<tr>
 					<td>
-						<img style="padding-left:10px;padding-right:10px" width="16px" src="./info.png">
+						<img style="padding-left:10px;padding-right:10px" width="16px" src="https://drive.google.com/uc?id=1Z4FJwxdPiVBiIM-K9SaR-e_7H4DP13P2">
 					</td>
 					<td>
 						<b>Your Selection:</b> ${pack}<br>
