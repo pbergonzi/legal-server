@@ -293,7 +293,8 @@ app.post('/', function(req, res) {
 						owner_email: simpleCard.ownerEmail,
 						owner_name: simpleCard.ownerName,
 						card_date_from: new Date(simpleCard.dateFrom),
-						card_date_to: new Date(simpleCard.dateTo)
+						card_date_to: new Date(simpleCard.dateTo),
+						promo_code: simpleCard.promoCode
 					};
 
 					//console.log(payment);
